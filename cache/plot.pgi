@@ -1,0 +1,12 @@
+#!/usr/bin/gnuplot -persist
+
+set term png
+set terminal pngcairo enhanced size 1920,1080
+set xlabel "Число элементов"
+set ylabel "Число попаданий"
+
+set output "1.png"
+#set title "Вставка"
+plot "test_results/test_results_ideal_sorted.csv" using 1:2 with lines title "Идеальный кэш", \
+     "test_results/test_results_lru_sorted.csv"   using 1:2 with lines title "LRU кэш", \
+     "test_results/test_results_lfu_sorted.csv"   using 1:2 with lines title "LFU кэш", \

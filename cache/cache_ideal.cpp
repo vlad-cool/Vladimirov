@@ -7,30 +7,37 @@ int main()
 {
     int cache_size, elements_size, hits = 0, element;
     std::unordered_map<int, int> cache;
-    std::vector<int> cached;
     std::cin >> cache_size >> elements_size;
+    std::vector<int> elements(elements_size);
 
     for (int i = 0; i < elements_size; i++)
     {
-        std::cin >> element;
+        std::cin >> elements[i];
+    }
+
+    for (int i = 0; i < elements_size; i++)
+    {
+        element = elements[i];
+
         if (cache.count(element) > 0)
         {
             hits++;
-            cached.erase(std::find(cached.begin(), cached.end(), element));
-            cached.emplace(cached.begin(), element);
         }
         else
         {
-            if (cached.size() < cache_size)
+            if (cache.size() < cache_size)
             {
-                cached.emplace(cached.begin(), element);
                 cache.insert({element, 0});
             }
             else
             {
-                cache.erase(cached.back());
-                cached.pop_back();
-                cached.emplace(cached.begin(), element);
+                auto max_iter = elements.begin();
+                for (auto iter = cache.begin(); iter != cache.end(); iter++)
+                {
+                    max_iter = std::max(max_iter, std::find(elements.begin() + i, elements.end(), (*iter).second));
+                }
+                
+                cache.erase(*max_iter);
                 cache.insert({element, 0});
             }
         }
