@@ -5,6 +5,8 @@ set terminal pngcairo enhanced size 1920,1080
 set xlabel "Число элементов"
 set ylabel "Число попаданий"
 
+set logscale xy
+
 set output "1.png"
 #set title "Вставка"
 plot "test_results/test_results_ideal_sorted.csv" using 1:2 with lines title "Идеальный кэш", \
