@@ -34,11 +34,21 @@ int main()
                 auto max_iter = elements.begin();
                 for (auto iter = cache.begin(); iter != cache.end(); iter++)
                 {
-                    max_iter = std::max(max_iter, std::find(elements.begin() + i, elements.end(), (*iter).second));
+                    max_iter = std::max(max_iter, std::find(elements.begin() + i, elements.end(), iter->first));
+
+                    if (max_iter == elements.end())
+                    {
+                        cache.erase(iter->first);
+                        cache.insert({element, 0});
+                        break;
+                    }
                 }
                 
-                cache.erase(*max_iter);
-                cache.insert({element, 0});
+                if(max_iter != elements.end() and max_iter > std::find(elements.begin() + i + 1, elements.end(), element))
+                {
+                    cache.erase(*max_iter);
+                    cache.insert({element, 0});
+                }
             }
         }
     }
